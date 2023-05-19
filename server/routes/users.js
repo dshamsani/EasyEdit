@@ -3,7 +3,7 @@ const { add, find, login, current } = require("../controllers/users");
 const { auth } = require("../middleware/auth");
 var router = express.Router();
 
-router.post("/add", auth, add);
+router.post("/add", add);
 
 router.get("/find", auth, find);
 

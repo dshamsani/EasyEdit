@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useLayoutEffect } from "react";
 
 import { useLogin } from "../../Hooks/useLogin";
 import { useAuth } from "../../Context/AuthContext/context";
@@ -8,16 +8,26 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { FaKey } from "react-icons/fa";
 
 import "./styles.scss";
+import { Link, Navigate } from "react-router-dom";
+import { useNotification } from "../../Context/NotificationContext/context";
 
 const LoginPage: FC = () => {
-  const { email, password, token, show, handleShowButton, isDisabled, validateEmail, validatePassword, loading, getData } = useLogin();
-  const { changeLocalStoreToken } = useAuth();
+  const { email, password, token, show, handleShowButton, isDisabled, validateEmail, validatePassword, loading, getData, notificationSended } =
+    useLogin();
+  const { changeLocalStoreToken, isAuthenticated } = useAuth();
+  const { notificationInfo } = useNotification();
 
   useEffect(() => {
     if (token) {
       changeLocalStoreToken("update", token);
     }
   }, [token]);
+
+  useLayoutEffect(() => {
+    if (notificationSended.current) return;
+    notificationSended.current = true;
+    notificationInfo("Please register or login to your account");
+  }, []);
 
   return (
     <>
@@ -60,9 +70,13 @@ const LoginPage: FC = () => {
             <Button isLoading={loading} onClick={getData} isDisabled={isDisabled}>
               Login
             </Button>
+            <Link to="/register">
+              <Button style={{ width: "100%" }}>Register</Button>
+            </Link>
           </div>
         </div>
       </div>
+      {isAuthenticated ? <Navigate to="/" /> : null}
     </>
   );
 };
