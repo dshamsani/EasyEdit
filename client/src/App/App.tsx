@@ -5,6 +5,7 @@ import { CheckAuthorization } from "./helpers";
 
 import LoginPage from "../Pages/Login";
 import RegisterPage from "../Pages/Register";
+import ProfilePage from "../Pages/Profile";
 
 const App: FC = () => {
   return (
@@ -14,7 +15,7 @@ const App: FC = () => {
         <Route path="/register" element={<RegisterPage />} />
 
         <Route path="/" element={CheckAuthorization(<span>Nothing here</span>)} />
-        <Route path="/profile" element={CheckAuthorization(<span>profile</span>)} />
+        <Route path="/profile" element={CheckAuthorization(<ProfilePage />)} />
       </Routes>
     </BrowserRouter>
   );

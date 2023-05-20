@@ -1,0 +1,60 @@
+.easyedit-profile {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  
+    &--container {
+    font-family: 'Roboto', sans-serif;
+      max-width: 75%;
+      height: 90%;
+      width: 100%;
+      margin: 100px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      overflow-y: auto !important;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+
+      & > h1 {
+        font-weight: 700;
+        font-size: 24px;
+      }
+    }
+
+    &--user {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 48px;
+        width: 100%;
+        padding: 50px 0;
+        font-weight: 300;
+
+        &__item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            
+            &--text {
+                text-transform: uppercase;
+                font-weight: 700;
+            }
+        }
+    }
+
+    &--buttons {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        justify-content: center;
+        align-items: center;
+    }
+  }
