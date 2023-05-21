@@ -189,9 +189,106 @@ const current = (req, res) => {
   return res.status(200).json(req.user);
 };
 
+const edit = async (req, res) => {
+  try {
+    const { email, name, surname, age } = req.body;
+    const { id } = req.user;
+
+    const user = await prisma.users.update({
+      where: {
+        id,
+      },
+      data: {
+        email,
+        age,
+        name,
+        surname,
+      },
+    });
+
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(400).json({
+        status: 400,
+        message: "Cant find user",
+      });
+    }
+  } catch {
+    res.status(400).json({
+      status: 400,
+      message: "Incorrect data",
+    });
+  }
+};
+
+const remove = async (req, res) => {
+  try {
+    const { id } = req.user;
+
+    const isDeleted = await prisma.users.delete({
+      where: {
+        id,
+      },
+    });
+    if (isDeleted) {
+      res.status(200).json({
+        message: "User successfully deleted",
+      });
+    } else {
+      res.status(400).json({
+        status: 400,
+        message: "Cant find user",
+      });
+    }
+  } catch {
+    res.status(400).json({
+      status: 400,
+      message: "Incorrect data",
+    });
+  }
+};
+
+const password = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const { password } = req.body;
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const changePassword = await prisma.users.update({
+      where: {
+        id,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+    if (changePassword) {
+      res.status(200).json({
+        message: "Password has been successfully changed",
+      });
+    } else {
+      res.status(400).json({
+        status: 400,
+        message: "Cant find user",
+      });
+    }
+  } catch {
+    res.status(400).json({
+      status: 400,
+      message: "Incorrect data",
+    });
+  }
+};
+
 module.exports = {
   add,
   find,
   login,
   current,
+  edit,
+  remove,
+  password,
 };

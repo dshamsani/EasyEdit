@@ -1,44 +1,43 @@
 import { FC } from "react";
 
-import { Button, Heading, Icon, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import {
+  Button,
+  Icon,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from "@chakra-ui/react";
+
 import { MdOutlineMailOutline } from "react-icons/md";
-import { FaKey } from "react-icons/fa";
 import { AiOutlineUser } from "react-icons/ai";
+import { useProfile } from "../../../../Hooks/useProfile";
 
-import { Navigate } from "react-router-dom";
-import { useLogin } from "../../Hooks/useLogin";
-import { useAuth } from "../../Context/AuthContext/context";
-
-import "./styles.scss";
-
-const RegisterPage: FC = () => {
-  const {
-    validateEmail,
-    validatePassword,
-    validateName,
-    validateSurname,
-    validateAge,
-    email,
-    password,
-    name,
-    surname,
-    age,
-    isRegisterDisabled,
-    isRegistred,
-    loading,
-    registerUser,
-  } = useLogin();
-  const { isAuthenticated } = useAuth();
+const EditButton: FC = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { validateEmail, validateName, validateSurname, validateAge, email, name, surname, age, isEditDisabled, editCurrentUser, loading } =
+    useProfile();
 
   return (
     <>
-      <div className="easyedit-login">
-        <div className="easyedit-login--container">
-          <Heading as="h2" size="md">
-            Register
-          </Heading>
-          <div className="easyedit-login--container__form">
-            <InputGroup>
+      <Button style={{ width: "60%" }} onClick={onOpen}>
+        Edit
+      </Button>
+
+      <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Editing user account data</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <InputGroup pb={5}>
               <InputLeftElement pointerEvents="none">
                 <Icon as={AiOutlineUser} />
               </InputLeftElement>
@@ -50,7 +49,7 @@ const RegisterPage: FC = () => {
                 onBlur={(e) => validateName(e.currentTarget.value)}
               />
             </InputGroup>
-            <InputGroup>
+            <InputGroup pb={5}>
               <InputLeftElement pointerEvents="none">
                 <Icon as={AiOutlineUser} />
               </InputLeftElement>
@@ -62,7 +61,7 @@ const RegisterPage: FC = () => {
                 onBlur={(e) => validateSurname(e.currentTarget.value)}
               />
             </InputGroup>
-            <InputGroup>
+            <InputGroup pb={5}>
               <InputLeftElement pointerEvents="none">
                 <Icon as={AiOutlineUser} />
               </InputLeftElement>
@@ -74,7 +73,7 @@ const RegisterPage: FC = () => {
                 onBlur={(e) => validateAge(e.currentTarget.value)}
               />
             </InputGroup>
-            <InputGroup>
+            <InputGroup pb={5}>
               <InputLeftElement pointerEvents="none">
                 <Icon as={MdOutlineMailOutline} />
               </InputLeftElement>
@@ -86,29 +85,29 @@ const RegisterPage: FC = () => {
                 onBlur={(e) => validateEmail(e.currentTarget.value)}
               />
             </InputGroup>
-            <InputGroup size="md">
-              <InputLeftElement>
-                <Icon as={FaKey} />
-              </InputLeftElement>
-              <Input
-                pr="4.5rem"
-                type={"text"}
-                name="password"
-                placeholder="Enter password"
-                isInvalid={password === undefined}
-                onBlur={(e) => validatePassword(e.currentTarget.value)}
-              />
-            </InputGroup>
-            <Button style={{ width: "100%" }} isLoading={loading} isDisabled={isRegisterDisabled} onClick={registerUser}>
-              Register
+          </ModalBody>
+
+          <ModalFooter>
+            <Button
+              variant="ghost"
+              mr={3}
+              isLoading={loading}
+              isDisabled={isEditDisabled}
+              onClick={() => {
+                editCurrentUser();
+                onClose();
+              }}
+            >
+              Edit
             </Button>
-          </div>
-        </div>
-      </div>
-      {isAuthenticated ? <Navigate to="/" /> : null}
-      {isRegistred ? <Navigate to="/login" /> : null}
+            <Button colorScheme="blue" onClick={onClose}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };
 
-export default RegisterPage;
+export default EditButton;

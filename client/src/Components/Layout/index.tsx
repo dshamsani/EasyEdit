@@ -20,17 +20,19 @@ const Layout: FC<ILayout> = ({ children }) => {
   return (
     <main className="easyedit-main">
       <aside className="easyedit-sidebar">
-        <div className="easyedit-sidebar__logo">
-          <div className="easyedit-sidebar__logo--main-text">
-            <span>EasyEdit</span>
-            <span className="easyedit-sidebar__logo--main-text--point">.</span>
+        <Link to="/">
+          <div className="easyedit-sidebar__logo">
+            <div className="easyedit-sidebar__logo--main-text">
+              <span>EasyEdit</span>
+              <span className="easyedit-sidebar__logo--main-text--point">.</span>
+            </div>
           </div>
-        </div>
+        </Link>
         <nav className="easyedit-sidebar--navigation">
-          <Link to="/" className={`${activeItem === 1 ? "active" : ""} easyedit-sidebar--navigation__item`} onClick={() => setActiveItem(1)}>
+          {/* <Link to="/" className={`${activeItem === 1 ? "active" : ""} easyedit-sidebar--navigation__item`} onClick={() => setActiveItem(1)}>
             <AiOutlineHome />
             Dashboard
-          </Link>
+          </Link> */}
         </nav>
       </aside>
       <div className="easyedit-main--content">

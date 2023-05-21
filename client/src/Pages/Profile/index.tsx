@@ -1,12 +1,14 @@
 import { FC, useEffect } from "react";
 import { useProfile } from "../../Hooks/useProfile";
 
+import EditButton from "./Components/EditButton";
+
 import "./styles.scss";
-import { Button } from "@chakra-ui/react";
+import DeleteButton from "./Components/DeleteButton";
+import ChangePassword from "./Components/ChangePassword";
 
 const ProfilePage: FC = () => {
-  const { getCurrentUser, user, loading } = useProfile();
-  console.log("user:", user);
+  const { getCurrentUser, user } = useProfile();
 
   useEffect(() => {
     getCurrentUser();
@@ -28,9 +30,6 @@ const ProfilePage: FC = () => {
           <div className="easyedit-profile--user__item">
             <span className="easyedit-profile--user__item--text">name: </span>
             <span>{user?.name}</span>
-          </div>
-          <div className="easyedit-profile--user__item">
-            <span className="easyedit-profile--user__item--text">surname: </span>
             <span>{user?.surname}</span>
           </div>
           <div className="easyedit-profile--user__item">
@@ -39,8 +38,9 @@ const ProfilePage: FC = () => {
           </div>
         </div>
         <div className="easyedit-profile--buttons">
-          <Button style={{ width: "60%" }}>Edit</Button>
-          <Button style={{ width: "60%" }}>Delete</Button>
+          <EditButton />
+          <ChangePassword />
+          <DeleteButton />
         </div>
       </div>
     </div>

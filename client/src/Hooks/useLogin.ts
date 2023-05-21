@@ -82,7 +82,7 @@ export const useLogin = () => {
 
   const validatePassword = (password: string) => {
     if (password.length <= 4) {
-      notificationWarn("Please enter the correct password");
+      notificationWarn("Please enter the longer password");
       setPassword(undefined);
     } else {
       setPassword(password);
