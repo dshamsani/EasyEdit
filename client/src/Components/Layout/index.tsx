@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 
 import { useAuth } from "../../Context/AuthContext/context";
 
-import { AiOutlineHome, AiOutlineUser } from "react-icons/ai";
+import { AiOutlineHome, AiOutlineUser, AiOutlinePlus } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 
 import "./styles.scss";
@@ -29,6 +29,10 @@ const Layout: FC<ILayout> = ({ children }) => {
           </div>
         </Link>
         <nav className="easyedit-sidebar--navigation">
+          <Link to="/" className={`${activeItem === 1 ? "active" : ""} easyedit-sidebar--navigation__item`} onClick={() => setActiveItem(1)}>
+            <AiOutlinePlus />
+            Add table
+          </Link>
           {/* <Link to="/" className={`${activeItem === 1 ? "active" : ""} easyedit-sidebar--navigation__item`} onClick={() => setActiveItem(1)}>
             <AiOutlineHome />
             Dashboard
